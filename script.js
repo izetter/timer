@@ -11,15 +11,34 @@ let initialTime = null;
 let dashOffset = null;
 let interval = null;
 let isPaused = true;
+let isReset = true;
 let hasInputEventOcurred = false;
+
+function initialize() {
+	initialTime = input.value;
+	isReset = false;
+	start();
+}
 
 function start() {
 	interval = setInterval(() => {
 		tick();
 	}, 1000 * RF);
 	isPaused = false;
-	initialTime = input.value;
-	hasInputEventOcurred = false;
+}
+
+function tick() {
+	if (input.value > 0) {
+		input.value = (input.value - RF).toFixed(2); // Remember that ROUGHNESS is in seconds!
+		trimCircumference();
+	} else {
+		clearInterval(interval); // change this to onComplete()
+	}
+}
+
+function trimCircumference() {
+	dashOffset = dashOffset - CIRCUMFERENCE / (initialTime / RF);
+	circle.setAttribute('stroke-dashoffset', dashOffset);
 }
 
 function pause() {
@@ -28,26 +47,19 @@ function pause() {
 }
 
 function reset() {
-	clearInterval(interval);
-	circle.setAttribute('stroke-dashoffset', 0);
-	isPaused = true;
-	initialTime = null;
+	pause();
+	isReset = true;
 	dashOffset = null;
-	if (!hasInputEventOcurred) input.value = 5;
-	hasInputEventOcurred = false;
-}
-
-function tick() {
-	if (input.value > 0) {
-		input.value = (input.value - RF).toFixed(2); // Remember that ROUGHNESS is in seconds!
-		trimCircumference();
+	circle.setAttribute('stroke-dashoffset', 0);
+	if (hasInputEventOcurred) {
+		initialTime = input.value;
+		hasInputEventOcurred = false;
 	} else {
-		clearInterval(interval);
+		input.value = initialTime;
 	}
 }
 
 function onInput() {
-	pause();
 	hasInputEventOcurred = true;
 	reset();
 }
@@ -58,12 +70,15 @@ function pressEnter(evt) {
 	}
 }
 
-function trimCircumference() {
-	dashOffset -= CIRCUMFERENCE / (initialTime / RF);
-	circle.setAttribute('stroke-dashoffset', dashOffset);
-}
-
 input.addEventListener('input', onInput);
 input.addEventListener('keyup', pressEnter);
-startPauseBtn.addEventListener('click', () => (isPaused ? start() : pause()));
 resetBtn.addEventListener('click', reset);
+startPauseBtn.addEventListener('click', () => {
+	if (isReset) {
+		initialize();
+	} else if (isPaused) {
+		start();
+	} else {
+		pause();
+	}
+});

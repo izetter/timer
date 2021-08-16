@@ -9,22 +9,28 @@
 	<script src="script.js" defer></script>
 </head>
 <body>
-	<h1>Timer</h1>
-	<svg  width="400" height="400">
-		<circle
-		r="110"
-		cx="200"
-		cy="200"
-		fill="transparent"
-		stroke="blue"
-		stroke-width="15"
-		stroke-dasharray="691"
-		stroke-dashoffset="0"
-		transform="rotate(-90 200 200)"
-		/>
-	</svg>
-	<input type="number" value="5" min="0">
-	<button id="start-pause"><i class="fas fa-play"></i></button>
-	<button id="reset"><i class="fas fa-redo-alt"></i></button>
+	<div class="timer">
+		<h1>TIMER</h1>
+		<section class="display">
+			<svg width="240" height="240">
+				<circle
+				r="110"
+				cx="120"
+				cy="120"
+				fill="transparent"
+				stroke="blue"
+				stroke-width="15"
+				stroke-dasharray="691"
+				stroke-dashoffset="0"
+				transform="rotate(-90 120 120)"
+				/>
+			</svg>
+			<input type="number" value="4" min="0">
+		</section>
+		<section class="controls">
+			<button class="start-pause"><span class="fas fa-play"></span></button>
+			<button class="reset"><span class="fas fa-redo-alt"></span></button>
+		</section>
+	</div>
 </body>
 </html>

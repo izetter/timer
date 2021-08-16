@@ -1,37 +1,36 @@
+
 body {
 	background-color: #ddd;
+	display: flex;
+	justify-content: center;
 }
 
-svg {
-	border: 1px solid black;
+.timer {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
 }
 
-button {
-	background-color: #eee;
-	border: 0.4rem solid #f1f0f0;
-	border-radius: 50%;
-	box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(0, 0, 0, 0.12);
-	color:#45caff;
-	font-size: 3rem;
-	height: 8rem;
-	width: 8rem;
+.display {
+	position: relative;
+	margin-bottom: 50px;
 }
 
-button:hover {
-	color: #ff1b6b;
-	box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(0, 0, 0, 0.12), inset -10px -10px 15px rgba(255, 255, 255, 0.5), inset 10px 10px 15px rgba(0, 0, 0, 0.12);
-}
-
+/* neat trick using translate to center element when position relative & absolute combo is required */
 input {
-	width: 15rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 70%;
 	border-radius: 1rem;
 	text-align: center;
-	font-size: 6rem;
-	border: none;
+	font-size: 4rem;
 	color: #45caff;
 	background-color: transparent;
 	cursor: text;
-}
+	border: none;
+}	
 
 input:focus,
 input:hover {
@@ -39,6 +38,34 @@ input:hover {
 	box-shadow: inset -6px -6px 5px rgba(255, 255, 255, 0.8), inset 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
+.controls {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+}
+
+button {
+	background-color: #eee;
+	border: 0.4rem solid #f1f1f1;
+	border-radius: 50%;
+	box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(0, 0, 0, 0.12);
+	color:#45caff;
+	font-size: 3rem;
+	height: 5rem;
+	width: 5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+button:hover {
+	color: #ff1b6b;
+	box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(0, 0, 0, 0.12), inset -10px -10px 15px rgba(255, 255, 255, 0.5), inset 10px 10px 15px rgba(0, 0, 0, 0.12);
+}
+
+span {
+	font-size: 2rem;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -51,3 +78,21 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

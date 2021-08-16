@@ -1,8 +1,8 @@
 'use strict';
 
 const input = document.querySelector('input');
-const startPauseBtn = document.querySelector('#start-pause');
-const resetBtn = document.querySelector('#reset');
+const startPauseBtn = document.querySelector('.start-pause');
+const resetBtn = document.querySelector('.reset');
 const circle = document.querySelector('circle');
 const CIRCUMFERENCE = circle.getAttribute('stroke-dasharray');
 

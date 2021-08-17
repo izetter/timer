@@ -1,11 +1,27 @@
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
 
 body {
 	background-color: #ddd;
-	display: flex;
-	justify-content: center;
+	/* display: flex; */
+	/* justify-content: center; */
+	margin: 0;
 }
 
-.timer {
+main {
+	margin: 2.5vh auto;
+	width: 90vw;
+	height: 95vh;
+	max-height: 570px;
+	max-width: 385px;
+	border-radius: 1.4rem;
+	background-color: #eee;
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
@@ -16,7 +32,17 @@ body {
 	margin-bottom: 50px;
 }
 
+h1 {
+	font-family: 'Raleway', sans-serif;
+	font-size: 2.5rem;
+	letter-spacing: 1.2rem;
+	text-indent: 1.2rem;
+	color: #45caff;
+	margin-top: 3.5rem;
+}
+
 /* neat trick using translate to center element when position relative & absolute combo is required */
+/* https://youtu.be/rzD-cPhq02E?t=508 */
 input {
 	position: absolute;
 	top: 50%;
@@ -40,8 +66,9 @@ input:hover {
 
 .controls {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	width: 100%;
+	margin-bottom: 50px;
 }
 
 button {
@@ -63,6 +90,10 @@ button:hover {
 	box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(0, 0, 0, 0.12), inset -10px -10px 15px rgba(255, 255, 255, 0.5), inset 10px 10px 15px rgba(0, 0, 0, 0.12);
 }
 
+.reset {
+	margin-left: 5rem;
+}
+
 span {
 	font-size: 2rem;
 }
@@ -82,7 +113,15 @@ input[type=number] {
 
 
 
+@media screen and (min-width: 769px) {
 
+}
+
+@media screen and (max-height: 567px) {
+	.display {
+		margin-bottom: 0;
+	}
+}
 
 
 

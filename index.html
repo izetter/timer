@@ -15,19 +15,29 @@
 	<main>
 		<h1>TIMER</h1>
 		<section class="display">
+
 			<svg width="240" height="240">
+
+				<linearGradient id="gradient" gradientTransform="rotate(120 0.5 0.5)">
+					<stop offset="5%" stop-color="#ff1b6b" />
+					<stop offset="95%" stop-color="#45caff" />
+				</linearGradient>
+
 				<circle
-				r="110"
-				cx="120"
-				cy="120"
-				fill="transparent"
-				stroke="blue"
-				stroke-width="15"
-				stroke-dasharray="691"
-				stroke-dashoffset="0"
-				transform="rotate(-90 120 120)"
+					r="110"
+					cx="120"
+					cy="120"
+					fill="none"
+					stroke="url(#gradient)"
+					stroke-width="14"
+					stroke-dasharray="691"
+					stroke-dashoffset="0"
+					stroke-linecap="round"
+					transform="rotate(-90 120 120)"
 				/>
+
 			</svg>
+
 			<input type="number" value="4" min="0">
 		</section>
 		<section class="controls">

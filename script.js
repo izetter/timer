@@ -8,8 +8,9 @@ const CIRCUMFERENCE = circle.getAttribute('stroke-dasharray');
 
 const RF = 0.01; // Roughness Factor. Smaller values will make the circle animation appear smoother. Also necessary to keep timer decrement on a real-time-pace and synchronized with the animation.
 let initialTime = input.value;
+let flickerInterval = null;
+let tickInterval = null;
 let dashOffset = null;
-let interval = null;
 let isPaused = true;
 let isReset = true;
 let isTimerInitialized = true;
@@ -23,7 +24,7 @@ function initialize() {
 }
 
 function start() {
-	interval = setInterval(() => {
+	tickInterval = setInterval(() => {
 		tick();
 	}, 1000 * RF);
 	isPaused = false;
@@ -46,14 +47,17 @@ function animateCircumference() {
 
 function pause() {
 	isPaused = true;
-	clearInterval(interval);
+	clearInterval(tickInterval);
 	togglePlayPauseBtn();
 }
 
 function reset(isDoubleClick) {
 	isReset = true;
 	dashOffset = null;
+	isTimerInitialized = true;
 	pause();
+	stopFlicker();
+	clearInterval(flickerInterval);
 	circle.setAttribute('stroke-dashoffset', 0);
 	if (hasInputEventOcurred) {
 		initialTime = input.value;
@@ -64,21 +68,26 @@ function reset(isDoubleClick) {
 	} else {
 		input.value = initialTime;
 	}
-	isTimerInitialized = true;
 }
 
 function onTimerFinish() {
-	clearInterval(interval);
-	if (isTimerInitialized) {
-		let flickerCount = 0;
-		const flicker = setInterval(() => {
-			input.classList.toggle('transparent');
-			flickerCount++;
-			if (flickerCount === 8) clearInterval(flicker);
-		}, 500);
-		isTimerInitialized = false;
-	}
-	// isTimerInitialized = false;
+	clearInterval(tickInterval);
+	if (isTimerInitialized) startFlicker();
+}
+
+function startFlicker() {
+	let flickerCount = 0;
+	flickerInterval = setInterval(() => {
+		input.classList.toggle('transparent');
+		flickerCount += 1;
+		if (flickerCount === 8) stopFlicker();
+	}, 500);
+	isTimerInitialized = false;
+}
+
+function stopFlicker() {
+	clearInterval(flickerInterval);
+	input.classList.remove('transparent');
 }
 
 function onInput() {
@@ -107,7 +116,9 @@ input.addEventListener('keyup', pressedEnter);
 resetBtn.addEventListener('click', () => reset(false));
 resetBtn.addEventListener('dblclick', () => reset(true));
 startPauseBtn.addEventListener('click', () => {
-	if (isReset) {
+	if (!isTimerInitialized) {
+		return;	// Change this return for a call to a function that changes icon to a stop that stops flicker and alarm but it does not reset
+	} else if (isReset) {
 		initialize();
 	} else if (isPaused) {
 		start();

@@ -9,19 +9,17 @@ html {
 
 body {
 	background-color: #ddd;
-	/* display: flex; */
-	/* justify-content: center; */
 	margin: 0;
 }
 
 main {
+	background-color: #eee;
 	margin: 2.5vh auto;
 	width: 90vw;
 	height: 95vh;
 	max-height: 570px;
 	max-width: 385px;
 	border-radius: 1.4rem;
-	background-color: #eee;
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
@@ -61,7 +59,7 @@ input {
 input:focus,
 input:hover {
 	outline: 0;
-	box-shadow: inset -6px -6px 5px rgba(255, 255, 255, 0.8), inset 10px 10px 10px rgba(0, 0, 0, 0.1);
+	box-shadow: inset -4px -4px 6px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .controls {
@@ -72,10 +70,10 @@ input:hover {
 }
 
 button {
+	outline: none;
 	background-color: #eee;
 	border: 0.4rem solid #f1f1f1;
 	border-radius: 50%;
-	box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(0, 0, 0, 0.12);
 	color:#45caff;
 	font-size: 3rem;
 	height: 5rem;
@@ -87,10 +85,9 @@ button {
 
 button:hover {
 	color: #ff1b6b;
-	box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(0, 0, 0, 0.12), inset -10px -10px 15px rgba(255, 255, 255, 0.5), inset 10px 10px 15px rgba(0, 0, 0, 0.12);
 }
 
-.reset {
+.reset-btn {
 	margin-left: 5rem;
 }
 
@@ -110,7 +107,9 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-
+.transparent {
+	color: transparent;
+}
 
 
 @media screen and (min-width: 769px) {

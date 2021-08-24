@@ -14,83 +14,79 @@ body {
 }
 
 main {
+	align-items: center;
 	background-color: #eee;
-	margin: 2.5vh auto;
-	width: 90vw;
-	height: 95vh;
-	max-height: 570px;
-	max-width: 385px;
 	border-radius: 1.4rem;
 	display: flex;
 	flex-flow: column nowrap;
-	align-items: center;
+	height: 95vh;
+	margin: 2.5vh auto;
+	max-height: 570px;
+	max-width: 385px;
+	width: 90vw;
 }
 
 .display {
-	position: relative;
 	margin-bottom: 50px;
+	position: relative;
 }
 
 h1 {
+	color: #45caff;
 	font-family: 'Raleway', sans-serif;
 	font-size: 2.5rem;
 	letter-spacing: 1.2rem;
-	text-indent: 1.2rem;
-	color: #45caff;
 	margin-top: 3.5rem;
+	text-indent: 1.2rem;
 }
 
 /* neat trick using translate to center element when position relative & absolute combo is required */
 /* https://youtu.be/rzD-cPhq02E?t=460 */
 input {
-	position: absolute;
-	top: 50%;
+	background-color: transparent;
+	border: none;
+	border-radius: 1rem;
+	color: #45caff;
+	cursor: text;
+	font-size: 4rem;
 	left: 50%;
+	position: absolute;
+	text-align: center;
+	top: 50%;
 	transform: translate(-50%, -50%);
 	width: 70%;
-	border-radius: 1rem;
-	text-align: center;
-	font-size: 4rem;
-	color: #45caff;
-	background-color: transparent;
-	cursor: text;
-	border: none;
 }
 
 input:focus,
 input:hover {
-	outline: 0;
 	box-shadow: inset -4px -4px 6px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(0, 0, 0, 0.1);
+	outline: 0;
 }
 
 .controls {
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	width: 100%;
-	margin-bottom: 50px;
+	/* margin-bottom: 50px; */
 }
 
 button {
-	outline: none;
+	align-items: center;
 	background-color: #eee;
 	border: 0.4rem solid #f1f1f1;
 	border-radius: 50%;
 	color: #45caff;
+	display: flex;
 	font-size: 3rem;
 	height: 5rem;
-	width: 5rem;
-	display: flex;
 	justify-content: center;
-	align-items: center;
+	outline: none;
+	width: 5rem;
 }
 
 button:hover {
 	color: #ff1b6b;
 	cursor: pointer;
-}
-
-.reset-btn {
-	margin-left: 5rem;
 }
 
 span {
@@ -102,9 +98,9 @@ span {
 }
 
 .fa-disabled {
-	opacity: 0.3;
-	filter: grayscale(1);
 	cursor: not-allowed;
+	filter: grayscale(1);
+	opacity: 0.3;
 	pointer-events: none;
 }
 
@@ -113,9 +109,11 @@ span {
 	background-position: center;
 	transition: background 0.3s;
 }
+
 .ripple:hover {
 	background: #eee radial-gradient(circle, transparent 1%, rgba(131, 80, 98, 0.03) 1%) center/15000%;
 }
+
 .ripple:active {
 	background-size: 100%;
 	transition: background 0s;
@@ -133,10 +131,31 @@ input[type='number'] {
 	-moz-appearance: textfield;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (orientation: landscape) and (max-height: 767px) {
+	h1 {
+		display: none;
+	}
+
+	main {
+		flex-direction: row;
+		justify-content: space-evenly;
+		max-width: 450px;
+	}
+
+	.controls {
+		align-content: space-around;
+		flex-direction: column;
+		height: 100%;
+		width: unset;
+	}
 }
 
 @media screen and (max-height: 567px) {
+
+	h1 {
+		margin-top: 2.5rem;
+	}
+
 	.display {
 		margin-bottom: 0;
 	}

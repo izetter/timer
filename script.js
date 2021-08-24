@@ -1,12 +1,13 @@
 'use strict';
 
 const input = document.querySelector('input');
-const startPauseBtn = document.querySelector('.start-pause-btn');
+const controlBtn = document.querySelector('.control-btn');
+const controlBtnIcon = controlBtn.children[0];
 const resetBtn = document.querySelector('.reset-btn');
 const circle = document.querySelector('circle');
 const CIRCUMFERENCE = circle.getAttribute('stroke-dasharray');
-
-const RF = 0.01; // Roughness Factor. Smaller values will make the circle animation appear smoother. Also necessary to keep timer decrement on a real-time-pace and synchronized with the animation.
+const alarm = new Audio('./alarm_beep.mp3');
+const RF = 0.01; // Roughness Factor, in seconds. Smaller values will make the circle animation appear smoother. Also necessary to keep timer decrement on a real-time-pace and synchronized with the animation.
 let initialTime = input.value;
 let flickerInterval = null;
 let tickInterval = null;
@@ -19,7 +20,6 @@ let hasInputEventOcurred = false;
 function initialize() {
 	initialTime = input.value;
 	isReset = false;
-	// isTimerInitialized = true;
 	start();
 }
 
@@ -28,12 +28,12 @@ function start() {
 		tick();
 	}, 1000 * RF);
 	isPaused = false;
-	togglePlayPauseBtn();
+	toggleControlBtnIcon();
 }
 
 function tick() {
 	if (input.value > 0) {
-		input.value = (input.value - RF).toFixed(2); // Remember that ROUGHNESS is in seconds!
+		input.value = (input.value - RF).toFixed(2); // Remember that RF is in seconds!
 		animateCircumference();
 	} else {
 		onTimerFinish();
@@ -48,7 +48,34 @@ function animateCircumference() {
 function pause() {
 	isPaused = true;
 	clearInterval(tickInterval);
-	togglePlayPauseBtn();
+	toggleControlBtnIcon();
+}
+
+function onTimerFinish() {
+	clearInterval(tickInterval);
+	if (isTimerInitialized) {
+		startFlicker();
+	}
+}
+
+function startFlicker() {
+	alarm.play();
+	isTimerInitialized = false;
+	controlBtnIcon.classList.add('fa-stop');
+	let flickerCount = 0;
+	flickerInterval = setInterval(() => {
+		input.classList.toggle('transparent');
+		flickerCount += 1;
+		if (flickerCount === 8) {
+			stopFlicker();
+			controlBtn.classList.add('fa-disabled');
+		}
+	}, 500);
+}
+
+function stopFlicker() {
+	clearInterval(flickerInterval);
+	input.classList.remove('transparent');
 }
 
 function reset(isDoubleClick) {
@@ -57,6 +84,7 @@ function reset(isDoubleClick) {
 	isTimerInitialized = true;
 	pause();
 	stopFlicker();
+	stopAlarm();
 	clearInterval(flickerInterval);
 	circle.setAttribute('stroke-dashoffset', 0);
 	if (hasInputEventOcurred) {
@@ -70,26 +98,6 @@ function reset(isDoubleClick) {
 	}
 }
 
-function onTimerFinish() {
-	clearInterval(tickInterval);
-	if (isTimerInitialized) startFlicker();
-}
-
-function startFlicker() {
-	let flickerCount = 0;
-	flickerInterval = setInterval(() => {
-		input.classList.toggle('transparent');
-		flickerCount += 1;
-		if (flickerCount === 8) stopFlicker();
-	}, 500);
-	isTimerInitialized = false;
-}
-
-function stopFlicker() {
-	clearInterval(flickerInterval);
-	input.classList.remove('transparent');
-}
-
 function onInput() {
 	hasInputEventOcurred = true;
 	reset();
@@ -97,27 +105,26 @@ function onInput() {
 
 function pressedEnter(evt) {
 	if (evt.key === 'Enter') {
-		startPauseBtn.click();
+		controlBtn.click();
 	}
 }
 
-function togglePlayPauseBtn() {
+function toggleControlBtnIcon() {
 	if (isReset) {
-		startPauseBtn.children[0].classList.add('fa-play');
-		startPauseBtn.children[0].classList.remove('fa-pause');
+		controlBtnIcon.classList.remove('fa-stop');
+		controlBtnIcon.classList.remove('fa-pause');
+		controlBtnIcon.classList.add('fa-play');
 	} else {
-		startPauseBtn.children[0].classList.toggle('fa-play');
-		startPauseBtn.children[0].classList.toggle('fa-pause');
+		controlBtnIcon.classList.toggle('fa-play');
+		controlBtnIcon.classList.toggle('fa-pause');
 	}
+	controlBtn.classList.remove('fa-disabled');
 }
 
-input.addEventListener('input', onInput);
-input.addEventListener('keyup', pressedEnter);
-resetBtn.addEventListener('click', () => reset(false));
-resetBtn.addEventListener('dblclick', () => reset(true));
-startPauseBtn.addEventListener('click', () => {
+function controlBtnHandler() {
 	if (!isTimerInitialized) {
-		return;	// Change this return for a call to a function that changes icon to a stop that stops flicker and alarm but it does not reset
+		stopAlarm();
+		controlBtn.classList.add('fa-disabled');
 	} else if (isReset) {
 		initialize();
 	} else if (isPaused) {
@@ -125,4 +132,16 @@ startPauseBtn.addEventListener('click', () => {
 	} else {
 		pause();
 	}
-});
+}
+
+function stopAlarm() {
+	stopFlicker();
+	alarm.pause();
+	alarm.currentTime = 0;
+}
+
+input.addEventListener('input', onInput);
+input.addEventListener('keyup', pressedEnter);
+controlBtn.addEventListener('click', controlBtnHandler);
+resetBtn.addEventListener('click', () => reset(false));
+resetBtn.addEventListener('dblclick', () => reset(true));

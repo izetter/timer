@@ -7,9 +7,9 @@ class Timer {
 		this.alarm = alarmAudio;
 
 		this.initialTime = this.input.value;
-		// eslint-disable-next-line prefer-destructuring
-		this.controlBtnIcon = controlBtn.children[0];
+		this.controlBtnIcon = controlBtn.children[0]; 	// destructuring would be [this.controlBtnIcon] = controlBtn.children;
 		this.CIRCUMFERENCE = this.circle.getAttribute('stroke-dasharray');
+
 		this.RF = 0.01;
 		this.flickerInterval = null;
 		this.tickInterval = null;
@@ -20,7 +20,7 @@ class Timer {
 		this.hasInputEventOcurred = false;
 
 		this.input.addEventListener('input', () => this.onInput());
-		this.input.addEventListener('keyup', () => this.pressedEnter());
+		this.input.addEventListener('keyup', (evt) => this.pressedEnter(evt)); 	// could instead be ` this.pressedEnter.bind(this) `
 		this.controlBtn.addEventListener('click', () => this.controlBtnHandler());
 		this.resetBtn.addEventListener('click', () => this.reset(false));
 		this.resetBtn.addEventListener('dblclick', () => this.reset(true));
@@ -92,7 +92,6 @@ class Timer {
 		this.dashOffset = null;
 		this.isTimerInitialized = true;
 		this.pause();
-		this.stopFlicker();
 		this.stopAlarm();
 		clearInterval(this.flickerInterval);
 		this.circle.setAttribute('stroke-dashoffset', 0);

@@ -2,7 +2,7 @@
 
 const input = document.querySelector('input');
 const controlBtn = document.querySelector('.control-btn');
-const controlBtnIcon = controlBtn.children[0];
+const controlBtnIcon = controlBtn.children[0]; // destructuring would be ` const [controlBtnIcon] = controlBtn.children; `
 const resetBtn = document.querySelector('.reset-btn');
 const circle = document.querySelector('circle');
 const CIRCUMFERENCE = circle.getAttribute('stroke-dasharray');
@@ -83,7 +83,6 @@ function reset(isDoubleClick) {
 	dashOffset = null;
 	isTimerInitialized = true;
 	pause();
-	stopFlicker();
 	stopAlarm();
 	clearInterval(flickerInterval);
 	circle.setAttribute('stroke-dashoffset', 0);

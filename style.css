@@ -67,7 +67,6 @@ input:hover {
 	display: flex;
 	justify-content: space-evenly;
 	width: 100%;
-	/* margin-bottom: 50px; */
 }
 
 button {
@@ -131,7 +130,57 @@ input[type='number'] {
 	-moz-appearance: textfield;
 }
 
-@media screen and (orientation: landscape) and (max-height: 767px) {
+
+/********* footer *********/
+
+footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.name {
+	font: .9rem 'Courier New', Courier, monospace;
+	text-decoration: none;
+	opacity: .55;
+	margin: 0 0 3px 6px;
+}
+
+.social-icon {
+	opacity: .35;
+	width: 25px;
+	margin-right: 6px;
+}
+
+.name:hover,
+.social-icon:hover {
+	opacity: .85;
+}
+
+/***** Media queries for footer *****/
+@media screen and (max-width: 767px) {
+
+	footer {
+		justify-content: center;
+	}
+
+	.social-icon {
+		display: none;
+	}
+}
+
+@media screen and (max-height: 619px) {
+	.name,
+	.social-icon {
+		display: none;
+	}
+}
+
+/***** Media queries *****/
+@media screen and (orientation: landscape) and (max-height: 719px) {
 	h1 {
 		display: none;
 	}
@@ -140,6 +189,10 @@ input[type='number'] {
 		flex-direction: row;
 		justify-content: space-evenly;
 		max-width: 450px;
+	}
+
+	.display {
+		margin-bottom: 0;
 	}
 
 	.controls {

@@ -149,10 +149,4 @@ class Timer {
 	}
 }
 
-const input = document.querySelector('input');
-const controlBtn = document.querySelector('.control-btn');
-const resetBtn = document.querySelector('.reset-btn');
-const circle = document.querySelector('circle');
-const alarm = new Audio('./alarm_beep.mp3');
-
-const timer = new Timer(input, controlBtn, resetBtn, circle, alarm);
+export default Timer;
